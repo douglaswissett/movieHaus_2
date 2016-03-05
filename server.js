@@ -9,12 +9,12 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// homepage
+// HOMEPAGE
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// theatres route
+// THREATRES
 app.get('/theatres', (req, res) => {
   // takes db.showThreatres
   //res.send(res.rows);
@@ -23,6 +23,24 @@ app.get('/theatres', (req, res) => {
 app.get('/theatres/:id', (req, res) => {
   // takes db.showTheatreMovies
   //res.send(res.rows);
+});
+app.post('/theatres/:id', (req, res) => {
+  // takes db.addMovie
+  // redirect to some route
+});
+
+// MOVIES
+app.get('/movies/:id', (req, res) => {
+  // takes db.getMovie
+  // res.send(res.rows)
+});
+app.put('/movies/:id', (req, res) => {
+  // takes db.editMovie
+  // redirect to some route
+});
+app.delete('/movies/:id', (req, res) => {
+  // takes db.deleteMovie
+  // redirect to some route
 });
 
 
