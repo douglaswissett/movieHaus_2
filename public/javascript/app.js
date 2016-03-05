@@ -14,7 +14,7 @@ $(document).ready(()=> {
 
   $('.theatre').click((event)=> {
     var tid = event.target.id;
-    // what is tid??
+    tid = tid.slice(1);
     $.get('/theatre/' + tid)
     .done((data)=> {
       $moviesContainer.empty();
@@ -27,7 +27,7 @@ $(document).ready(()=> {
 
   $('.movie').click((event)=> {
     var mid = event.target.id;
-    // what is tid??
+    mid = mid.slice(1);
     $.get('/movies/' + mid)
     .done((data)=> {
       $moviesContainer.empty();
