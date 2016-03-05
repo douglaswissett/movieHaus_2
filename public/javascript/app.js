@@ -7,7 +7,7 @@ $(document).ready(()=> {
   .done((data)=> {
     $theatresContainer.empty();
     for (var i = 1; i <= data.length; i++) {
-      var div = $('<div>').addClass('theatre').attr('id', 't'+ i).text(data[i].name);
+      var div = $('<div>').addClass('theatre').attr('id', 't'+ data[i].theatre_id).text(data[i].name);
       $theatresContainer.append(div);
     }
   })
@@ -19,7 +19,7 @@ $(document).ready(()=> {
     .done((data)=> {
       $moviesContainer.empty();
       for (var i = 1; i <= data.length; i++) {
-        var div = $('<div>').addClass('movie').attr('id', 'm'+ i).text(data[i].name);
+        var div = $('<div>').addClass('movie').attr('id', 'm'+data[i].movie_id).text(data[i].name); // need to assign db movie id
         $moviesContainer.append(div);
       }
     })
@@ -33,9 +33,9 @@ $(document).ready(()=> {
       $moviesContainer.empty();
       $theatresContainer.empty();
       //need to add other attributes of movie
-      var div = ($('<div>').text(data[i].name));
+      var div = $('<div>').text(data[i].name);
       $profileContainer.append(div);
     })
   })
 
-}
+})
