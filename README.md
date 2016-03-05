@@ -1,3 +1,4 @@
 # movieHaus_2
 
-Contributor Elton
+Contributor L2Klbs
+Contributor Pita
