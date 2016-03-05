@@ -17,7 +17,8 @@ CREATE TABLE movies (
   year int,
   rating numeric,
   director VARCHAR(255),
-  plot VARCHAR(255)
+  plot VARCHAR(255),
+  showTimes VARCHAR(255)
 );
 
 CREATE TABLE actors (   
