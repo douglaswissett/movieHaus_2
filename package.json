@@ -1,0 +1,25 @@
+{
+  "name": "moviehaus_2",
+  "version": "1.0.0",
+  "description": "Create a single page app for MovieHaus 2.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/douglaswissett/movieHaus_2.git"
+  },
+  "author": "Douglas Walker, Elton Cheng, Peter Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/douglaswissett/movieHaus_2/issues"
+  },
+  "homepage": "https://github.com/douglaswissett/movieHaus_2#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "path": "^0.12.7"
+  }
+}
