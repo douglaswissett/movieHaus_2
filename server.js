@@ -29,7 +29,7 @@ app.get('/theatres', db.showTheatres, (req, res) => {
 app.get('/theatres/:id', db.showTheatreMovie, (req, res) => {
   // takes db.showTheatreMovies
   var data = res.rows;
-  res.send(data);  
+  res.send(data);
 });
 app.post('/theatres/:id', db.addMovie, (req, res) => {
   // takes db.addMovie

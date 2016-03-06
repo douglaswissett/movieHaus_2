@@ -39,8 +39,9 @@ $(document).ready(()=> {
     })
     $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
     $('#delete').click((event)=> {
+
       removeMovie(data, tid);
-    })          
+    })
   }
 
 
@@ -59,10 +60,16 @@ $(document).ready(()=> {
         var h2 = $('<h2>').text('Movie List');
         var ul = $('<ul>');
         $moviesContainer.append(h2);
-        data.forEach((el) => {
-          var li = $('<li>').text(el.title + ': ' + el.showtimes.split(',').join(' & ')).attr('id', 'm'+el.movie_id).addClass('movie');
+        console.log(data);
+        if (!data) {
+          var li = $('<li>').text('No Movies Bitch');
           ul.append(li);
-        });
+        } else {
+          data.forEach((el) => {
+            var li = $('<li>').text(el.title + ': ' + el.showtimes.split(',').join(' & ')).attr('id', 'm'+el.movie_id).addClass('movie');
+            ul.append(li);
+          });
+        }
         $moviesContainer.append(ul);
         movieEvent(tid);
       })
@@ -111,16 +118,18 @@ $(document).ready(()=> {
       event.preventDefault();
 
       $.ajax({
-        url: '/movies/'+ mid, 
+        url: '/movies/'+ mid,
         type: 'PUT',
         data: $('#editForm').serialize()
       })
+
       .done( (data) => {
         renderProfile(data);
       })
     });
   }
-  
+
+
   function removeMovie(data, tid) {
     var mid = data.movie_id;
 
