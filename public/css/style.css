@@ -1,0 +1,47 @@
+html, body {
+  margin: 0;
+  padding: 0;
+
+  font-family: sans-serif;
+}
+
+#container {
+  border: 1px solid black;
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+}
+
+#nav-bar {
+  width: 80%;
+  height: 50px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+#homeList, #homeList li,#homeList a {
+  float: left;
+  list-style: none;
+  text-decoration: none;
+}
+
+#searchForm {
+  float: right;
+  padding: 15px;
+}
+
+#theatre-container {
+  border: 1px solid red;
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  float: left;
+}
+
+#movie-container {
+  border: 2px solid blue;
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  float: right;
+}
