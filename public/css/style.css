@@ -75,3 +75,25 @@ img {
 #edit-container {
   border: 2px solid red;
 }
+
+#results-container {
+  border: 2px solid purple;
+}
+
+#add-container {
+  border: 2px solid aqua;
+}
+
+.results {
+  border: 2px solid red;
+  text-align: center;
+}
+
+.result-list {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.results img {
+  width: 50%;
+}
