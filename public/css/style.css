@@ -45,3 +45,23 @@ html, body {
   height: 100%;
   float: right;
 }
+
+#profile-container {
+  width: 49%;
+  height: 100%;
+  border: 2px solid blue;
+  padding: 20px;
+  float: left;
+}
+
+#profile-img {
+  width: 46%;
+  height: 100%;
+  float: right;
+  text-align: center;
+  border: 1px solid yellow;
+}
+
+img {
+  height: 100%;
+}

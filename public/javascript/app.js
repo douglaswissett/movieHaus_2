@@ -35,7 +35,7 @@ $(document).ready(()=> {
         var ul = $('<ul>');
         $moviesContainer.append(h2);
         data.forEach((el) => {
-          var li = $('<li>').text(el.title).attr('id', 'm'+el.movie_id).addClass('movie');
+          var li = $('<li>').text(el.title + ': ' + el.showtimes.split(',').join(' & ')).attr('id', 'm'+el.movie_id).addClass('movie');
           ul.append(li);
         });
         $moviesContainer.append(ul);
@@ -54,8 +54,20 @@ $(document).ready(()=> {
       $.get('/movies/' + mid)
       .done((data)=> {
         $container.empty();
-        //need to add other attributes of movie
 
+        console.log(data);
+
+        $container.append($('<div>').attr('id', 'profile-container'));
+        $container.append($('<div>').attr('id', 'profile-img'));
+        $('#profile-container').append($('<h2>').text(data.title + ' (' + data.year + ')'));
+        $('#profile-container').append($('<p>').text('Rating: ' + data.rating));
+        $('#profile-container').append($('<p>').text('Directors: ' + data.director));
+        $('#profile-container').append($('<p>').text('Actors: ' + data.actors));
+        $('#profile-container').append($('<p>').text('Plot: ' + data.plot));
+        $('#profile-img').append(`<img src=${data.img_url}>`);
+
+        $('#profile-container').append($('<button>').text('Edit').attr('id', 'edit'));
+        $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
       })
     })
   }  
@@ -65,8 +77,12 @@ $(document).ready(()=> {
 
   $('#searchForm').submit((event) => {
     event.preventDefault();
-
     $container.empty();
-
+    var title = event.target[0].value;
+    $.get('http://www.omdbapi.com/?s=' + title) // need to request again using id for more detail
+    .done( (data) => {
+      console.log(data);
+    });
   });
+
 })
