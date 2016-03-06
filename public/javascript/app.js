@@ -1,7 +1,7 @@
 $(document).ready(()=> {
   var $container = $('#container');
-  
-  
+
+
   // var $profileContainer = $('#profile-container');
 
   renderHome();
@@ -12,25 +12,25 @@ $(document).ready(()=> {
       $container.append($('<div>').attr('id', 'theatre-container'));
       $container.append($('<div>').attr('id', 'movie-container'));
 
-      var $theatresContainer = $('#theatre-container');  
+      var $theatresContainer = $('#theatre-container');
       for (var i = 0; i < data.length; i++) {
         var div = $('<div>').addClass('theatre').attr('id', 't'+ data[i].theatre_id).text(data[i].name);
         $theatresContainer.append(div);
       }
       theatreEvent();
-    })  
+    })
   }
-  
+
   function theatreEvent() {
     $('.theatre').click((event)=> {
       var tid = event.target.id;
       tid = tid.slice(1);
-      
+
       $.get('/theatres/' + tid)
       .done((data)=> {
         $('#movie-container').empty();
         var $moviesContainer = $('#movie-container');
-        
+
         var h2 = $('<h2>').text('Movie List');
         var ul = $('<ul>');
         $moviesContainer.append(h2);
@@ -43,13 +43,13 @@ $(document).ready(()=> {
       })
     })
   }
-    
-  
+
+
   function movieEvent() {
     $('.movie').click((event)=> {
       var mid = event.target.id;
       mid = mid.slice(1);
-      
+
 
       $.get('/movies/' + mid)
       .done((data)=> {
@@ -67,13 +67,56 @@ $(document).ready(()=> {
         $('#profile-img').append(`<img src=${data.img_url}>`);
 
         $('#profile-container').append($('<button>').text('Edit').attr('id', 'edit'));
+        $('#edit').click((event)=> {
+          editMovie(data.title, data.year, data.rating);
+        })
         $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
+        var $delete = $('#delete');
+        $delete.click((event)=> {
+          removeMovie();
+        })
       })
     })
-  }  
-      
-  
-  
+  }
+
+  function editMovie(title, year, rating) {
+    $('#profile-container').empty()
+    .append(
+      `<div id="edit-container>`,
+      `<form id="editForm">`,
+      `<input type="text" name="title" placeholder="${title}">`,
+      `<input type="int" name="year" placeholder="${year}">`,
+      `<input type="int" name="rating" placeholder="${rating}">`,
+      '<input type="text" name="director" placeholder="director">',
+      '<input type="text" name="plot" placeholder="plot">',
+      '<input type="text" name="actors" placeholder="actors">',
+      '<input type="submit" value="Edit">',
+      '</form>',
+      '</div>'
+    );
+    $('#editForm').submit((event) => {
+      //need to grab movie id(mid)
+    //   $.ajax('/movies/' + mid, {
+    //     type: PUT
+    //   })
+    //   .done(data)=> {
+    //
+    //   }
+        console.log('yoyoyo');
+    })
+  }
+
+  // function removeMovie() {
+  //   //need to grab movie id(mid)
+  //   $.ajax('/movies/' + mid, {
+  //     type: DELETE
+  //   })
+  //   .done(data)=> {
+  //
+  //   }
+  // }
+
+
 
   $('#searchForm').submit((event) => {
     event.preventDefault();
