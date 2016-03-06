@@ -98,17 +98,21 @@ $(document).ready(()=> {
   }
 
   function submitEdit(data) {
+    var mid = data.movie_id;
+
     $('#editForm').submit((event) => {
       event.preventDefault();
-      //need to grab movie id(mid)
-    //   $.ajax('/movies/' + data.movie_id, {
-    //     type: PUT
-    //   })
-    //   .done(data)=> {
-    //
-    //   }
+
+      $.ajax({
+        url: '/movies/' + mid,
+        type: 'PUT',
+        datatype: 'json'
+      })
+       .done((data)=> {
+         renderHome();
+       })
         console.log('yoyoyo');
-    })
+      })
   }
 
   // function removeMovie() {
@@ -116,9 +120,9 @@ $(document).ready(()=> {
   //   $.ajax('/movies/' + mid, {
   //     type: DELETE
   //   })
-  //   .done(data)=> {
+  //   .done((data)=> {
   //
-  //   }
+  //   })
   // }
 
 

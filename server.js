@@ -26,7 +26,7 @@ app.get('/theatres', db.showTheatres, (req, res) => {
 app.get('/theatres/:id', db.showTheatreMovie, (req, res) => {
   // takes db.showTheatreMovies
   var data = res.rows;
-  res.send(data);  
+  res.send(data);
 });
 app.post('/theatres/:id', (req, res) => {
   // takes db.addMovie
@@ -39,7 +39,7 @@ app.get('/movies/:id', db.getMovie, (req, res) => {
   var data = res.rows;
   res.send(data);
 });
-app.put('/movies/:id', (req, res) => {
+app.put('/movies/:id', db.editMovie, (req, res) => {
   // takes db.editMovie
   // redirect to some route
 });
