@@ -5,15 +5,15 @@ html, body {
   font-family: sans-serif;
 }
 
-#container {
+.container {
   border: 1px solid black;
-  width: 80%;
-  height: 500px;
-  margin: 0 auto;
+  /*width: 80%;*/
+  /*height: 500px;*/
+  /*margin: 0 auto;*/
 }
 
 #nav-bar {
-  width: 80%;
+  /*width: 80%;*/
   height: 50px;
   margin: 0 auto;
   border: 1px solid black;
@@ -27,13 +27,13 @@ html, body {
 
 #searchForm {
   float: right;
-  padding: 15px;
+  margin: 0;
 }
 
 #theatre-container {
   border: 1px solid red;
   display: inline-block;
-  width: 49%;
+  /*width: 48%;*/
   height: 100%;
   float: left;
 }
@@ -41,7 +41,7 @@ html, body {
 #movie-container {
   border: 2px solid blue;
   display: inline-block;
-  width: 49%;
+ /* width: 48%;*/
   height: 100%;
   float: right;
 }
@@ -64,4 +64,8 @@ html, body {
 
 img {
   height: 100%;
+}
+
+#edit-container {
+  border: 2px solid red;
 }
