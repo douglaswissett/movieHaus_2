@@ -71,19 +71,19 @@ function addShowtime(time, tID, mID){
 // 3- (iterate) add each showTime to theatre_movie_showtime WHERE movie_id AND theatre_id
 function addMovie(req,res,next){
   // var tID = req.params.id;
-  db.any(`INSERT INTO movies(title, img_url, year, rating, director, plot, actors) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING movie_id;`,
-          [req.body.title, req.body.img_url, req.body.year, req.body.rating, req.body.director, req.body.plot, req.body.actors])
+  db.one(`INSERT INTO movies(title, img_url, year, rating, director, plot, actors) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING movie_id;`,
+          [req.body.Title, req.body.Poster, req.body.Year, req.body.imdbRating, req.body.Director, req.body.Plot, req.body.Actors])
     .then((data)=>{
-      console.log(data);      // need to get movie_id
-      var showTimes = req.body.showtimes.split(' ');   // string or array?
+      console.log(data.movie_id);      // need to get movie_id
+      //var showTimes = req.body.showtimes.split(' ');   // string or array?
       // iterate & add each showTime to theatre_movie_showtime table
-      showTimes.forEach((time)=>{
-        addShowtime(time, req.params.id, req.body.mid);
-      });
+      // showTimes.forEach((time)=>{
+      //   addShowtime(time, req.params.id, req.body.mid);
+      // });
       next();
     })
-    .catch(()=>{
-      console.log('ERROR in ADDING MOVIE!');
+    .catch((error)=>{
+      console.log('ERROR in ADDING MOVIE!', error);
     })    
 }
 

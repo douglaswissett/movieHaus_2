@@ -31,9 +31,10 @@ app.get('/theatres/:id', db.showTheatreMovie, (req, res) => {
   var data = res.rows;
   res.send(data);  
 });
-app.post('/theatres/:id', (req, res) => {
+app.post('/theatres/:id', db.addMovie, (req, res) => {
   // takes db.addMovie
   // redirect to some route
+  console.log(req.body);
 });
 
 // MOVIES

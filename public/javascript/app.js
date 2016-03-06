@@ -135,8 +135,28 @@ $(document).ready(()=> {
   }
 
 
+  function submitAdd() {
+    $('.addBtns').submit((event) => {
+      event.preventDefault();
+      var omdbID = event.target.id;
+      var tid = $("select[name='dropDown']").val();
 
-
+      $.get('http://www.omdbapi.com/?i='+ omdbID)
+      .done( (data) => {
+        console.log(data);
+       $.ajax({
+        url: '/theatres/'+ tid,
+        dataType: 'json',
+        data: data,
+        type: 'post'
+       })
+       .done( () => {
+        console.log('made it home!');
+        //renderHome();
+       });
+      });
+    });
+  }
 
 
   /* Nav-bar */
@@ -156,28 +176,32 @@ $(document).ready(()=> {
     .done( (data) => {
       var $results = $('#results-container');
       
-      data.Search.forEach((el) => {
+      data.Search.forEach((movie) => {
         var div = $('<div>').addClass('results');
         var ul = $('<ul>');
+        var form = $('<form>').attr('id', movie.imdbID).addClass('addBtns');
+        var select = $('<select name="dropDown">');
+        select.append(
+          `<option value="1">AMC Times Square</option>`,
+          `<option value="2">Regal Cinemas Union Square</option>`,
+          `<option value="3">AMC Loews 34th Street</option>`
+        );
+        form.append(select, $('<input type="submit" value="Add Movie">'));
 
         ul.append(
-          `<li class="result-list">${el.Title}</li>`,
-          `<li class="result-list">${el.Year}</li>`,
-          `<li class="result-list">${el.imdbID}</li>`,
-          `<img src="${el.Poster}">`
+          `<li class="result-list">${movie.Title}</li>`,
+          `<li class="result-list">${movie.Year}</li>`,
+          `<li class="result-list">${movie.imdbID}</li>`,
+          `<img src="${movie.Poster}">`
         );
-        div.append(ul);
-        div.append($('<button>').text('Add Movie').attr('id', 'add'));
+
+        div.append(ul, form);
         $results.append(div);
       });
-
-      $('#add').click((event) => {
-        console.log();
-      });
+      
+      submitAdd();
     });
   });
-
-
 
 
 })
