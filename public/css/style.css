@@ -19,7 +19,7 @@ html, body {
   border: 1px solid black;
 }
 
-#homeList, li, a {
+#homeList, #homeList li,#homeList a {
   float: left;
   list-style: none;
   text-decoration: none;
@@ -28,4 +28,20 @@ html, body {
 #searchForm {
   float: right;
   padding: 15px;
+}
+
+#theatre-container {
+  border: 1px solid red;
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  float: left;
+}
+
+#movie-container {
+  border: 2px solid blue;
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  float: right;
 }

@@ -34,9 +34,10 @@ app.post('/theatres/:id', (req, res) => {
 });
 
 // MOVIES
-app.get('/movies/:id', (req, res) => {
+app.get('/movies/:id', db.getMovie, (req, res) => {
   // takes db.getMovie
-  // res.send(res.rows)
+  var data = res.rows;
+  res.send(data);
 });
 app.put('/movies/:id', (req, res) => {
   // takes db.editMovie

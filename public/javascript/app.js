@@ -8,11 +8,11 @@ $(document).ready(()=> {
   function renderHome() {
     $.get('/theatres')
     .done((data)=> {
-      console.log(data);
       $container.empty();
       $container.append($('<div>').attr('id', 'theatre-container'));
-      var $theatresContainer = $('#theatre-container');  
+      $container.append($('<div>').attr('id', 'movie-container'));
 
+      var $theatresContainer = $('#theatre-container');  
       for (var i = 0; i < data.length; i++) {
         var div = $('<div>').addClass('theatre').attr('id', 't'+ data[i].theatre_id).text(data[i].name);
         $theatresContainer.append(div);
@@ -25,35 +25,41 @@ $(document).ready(()=> {
     $('.theatre').click((event)=> {
       var tid = event.target.id;
       tid = tid.slice(1);
-
-      $.get('/theatre/' + tid)
+      
+      $.get('/theatres/' + tid)
       .done((data)=> {
-        
-        $container.append($('<div>').attr('id', 'movie-container').addClass('exist'));
+        $('#movie-container').empty();
         var $moviesContainer = $('#movie-container');
         
-        for (var i = 0; i < data.length; i++) {
-          var div = $('<div>').addClass('movie').attr('id', 'm'+data[i].movie_id).text(data[i].name); // need to assign db movie id
-          $moviesContainer.append(div);
-        }
+        var h2 = $('<h2>').text('Movie List');
+        var ul = $('<ul>');
+        $moviesContainer.append(h2);
+        data.forEach((el) => {
+          var li = $('<li>').text(el.title).attr('id', 'm'+el.movie_id).addClass('movie');
+          ul.append(li);
+        });
+        $moviesContainer.append(ul);
+        movieEvent();
       })
     })
   }
     
   
-  
+  function movieEvent() {
     $('.movie').click((event)=> {
       var mid = event.target.id;
       mid = mid.slice(1);
+      
+
       $.get('/movies/' + mid)
       .done((data)=> {
-        $moviesContainer.empty();
-        $theatresContainer.empty();
+        $container.empty();
         //need to add other attributes of movie
-        var div = $('<div>').text(data[i].name);
-        $profileContainer.append(div);
+
       })
-    })  
+    })
+  }  
+      
   
   
 
