@@ -55,8 +55,6 @@ $(document).ready(()=> {
       .done((data)=> {
         $container.empty();
 
-        console.log(data);
-
         $container.append($('<div>').attr('id', 'profile-container'));
         $container.append($('<div>').attr('id', 'profile-img'));
         $('#profile-container').append($('<h2>').text(data.title + ' (' + data.year + ')'));
@@ -98,17 +96,22 @@ $(document).ready(()=> {
   }
 
   function submitEdit(data) {
+    var mid = data.movie_id;
+
     $('#editForm').submit((event) => {
       event.preventDefault();
-      //need to grab movie id(mid)
-    //   $.ajax('/movies/' + mid, {
-    //     type: PUT
-    //   })
-    //   .done(data)=> {
-    //
-    //   }
-        console.log('yoyoyo');
-    })  
+
+      console.log();
+      $.ajax({
+        url: '/movies/'+ mid, 
+        type: 'PUT',
+        data: $('#editForm').serialize()
+      })
+      .done( (data) => {
+        console.log(data);
+      })
+    });
+
   }
   
   // function removeMovie() {
@@ -126,6 +129,7 @@ $(document).ready(()=> {
   $('#searchForm').submit((event) => {
     event.preventDefault();
     $container.empty();
+
     var title = event.target[0].value;
     $.get('http://www.omdbapi.com/?s=' + title) // need to request again using id for more detail
     .done( (data) => {
