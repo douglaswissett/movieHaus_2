@@ -5,6 +5,13 @@ html, body {
   font-family: sans-serif;
 }
 
+#container {
+  border: 1px solid black;
+  width: 80%;
+  height: 500px;
+  margin: 0 auto;
+}
+
 #nav-bar {
   width: 80%;
   height: 50px;
@@ -12,7 +19,7 @@ html, body {
   border: 1px solid black;
 }
 
-#homeList, li, a {
+#homeList, #homeList li,#homeList a {
   float: left;
   list-style: none;
   text-decoration: none;
@@ -21,4 +28,40 @@ html, body {
 #searchForm {
   float: right;
   padding: 15px;
+}
+
+#theatre-container {
+  border: 1px solid red;
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  float: left;
+}
+
+#movie-container {
+  border: 2px solid blue;
+  display: inline-block;
+  width: 49%;
+  height: 100%;
+  float: right;
+}
+
+#profile-container {
+  width: 49%;
+  height: 100%;
+  border: 2px solid blue;
+  padding: 20px;
+  float: left;
+}
+
+#profile-img {
+  width: 46%;
+  height: 100%;
+  float: right;
+  text-align: center;
+  border: 1px solid yellow;
+}
+
+img {
+  height: 100%;
 }
