@@ -100,8 +100,8 @@ function editMovie(req,res,next){
       console.log('UPDATED NEW MOVIE INFO & SHOWTIMES!');     // testing status for UPDATE
       next();
     })
-    .catch(()=>{
-      console.log('ERROR in EDITING MOVIE DETAILS!');
+    .catch((error)=>{
+      console.log('ERROR in EDITING MOVIE DETAILS!', error);
     })
 }
 
@@ -109,7 +109,7 @@ function editMovie(req,res,next){
 function deleteMovie(req,res,next){
   // var mID = req.params.id;
   db.none(`DELETE FROM theatre_movie_showtime WHERE movie_id=($1) AND theatre_id=($2);`,
-          [req.params.mID, req.params.tID])   // how do we differentiate btw movie_id & theatre_id ??
+          [req.params.id, req.body.tid])   // how do we differentiate btw movie_id & theatre_id ??
     .then(()=>{
       console.log('DELETE COMPLETED!');     // testing status for DELETE
       next();

@@ -39,8 +39,13 @@ $(document).ready(()=> {
     })
     $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
     $('#delete').click((event)=> {
+<<<<<<< HEAD
       removeMovie();
     })
+=======
+      removeMovie(data, tid);
+    })
+>>>>>>> 679c7d0f2c7cce6df5a32d49d6571946ced2defb
   }
 
 
@@ -95,6 +100,7 @@ $(document).ready(()=> {
         `<input type="text" name="director" placeholder="${data.director}">`,
         `<input type="text" name="plot" placeholder="${data.plot}">`,
         `<input type="text" name="actors" placeholder="${data.actors}">`,
+        `<input type="text" name="showtimes" placeholder="Edit Showtimes">`,
         `<input type="hidden" name="img_url" value="${data.img_url}">`,
         `<input type="hidden" name="tid" value="${tid}">`,
         `<input type="hidden" name="mid" value="${data.movie_id}">`,
@@ -116,22 +122,24 @@ $(document).ready(()=> {
       })
 
       .done( (data) => {
-        console.log(data);
         renderProfile(data);
       })
     });
   }
 
-  // function removeMovie() {
-  //   //need to grab movie id(mid)
-  //   $.ajax('/movies/' + mid, {
-  //     type: DELETE
-  //   })
-  //   .done((data)=> {
-  //
-  //   })
-  // }
 
+  function removeMovie(data, tid) {
+    var mid = data.movie_id;
+
+    $.ajax({
+      url: '/movies/' + mid,
+      type: 'DELETE',
+      data: {tid: tid}
+    })
+    .done((data)=> {
+      renderHome();
+    });
+  }
 
 
 
