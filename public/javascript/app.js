@@ -82,19 +82,24 @@ $(document).ready(()=> {
   function editMovie(data) {
     $('#profile-container').empty()
     .append(
-      `<div id="edit-container">`,
-      `<form id="editForm">`,
-      `<input type="text" name="title" placeholder="${data.title}">`,
-      `<input type="int" name="year" placeholder="${data.year}">`,
-      `<input type="int" name="rating" placeholder="${data.rating}">`,
-      `<input type="text" name="director" placeholder="${data.director}">`,
-      `<input type="text" name="plot" placeholder="${data.plot}">`,
-      `<input type="text" name="actors" placeholder="${data.actors}">`,
-      '<input type="submit" value="Edit">',
-      '</form>',
-      '</div>'
-    );
+        `<div id="edit-container">`);
+      $('#edit-container').append(
+        `<form id="editForm">`);
+      $('#editForm').append(
+        `<input type="text" name="title" placeholder="${data.title}">`,
+        `<input type="int" name="year" placeholder="${data.year}">`,
+        `<input type="int" name="rating" placeholder="${data.rating}">`,
+        `<input type="text" name="director" placeholder="${data.director}">`,
+        `<input type="text" name="plot" placeholder="${data.plot}">`,
+        `<input type="text" name="actors" placeholder="${data.actors}">`,
+        '<input type="submit" value="Edit">'
+      );
+    submitEdit(data);
+  }
+
+  function submitEdit(data) {
     $('#editForm').submit((event) => {
+      event.preventDefault();
       //need to grab movie id(mid)
     //   $.ajax('/movies/' + mid, {
     //     type: PUT
@@ -103,9 +108,9 @@ $(document).ready(()=> {
     //
     //   }
         console.log('yoyoyo');
-    })
+    })  
   }
-
+  
   // function removeMovie() {
   //   //need to grab movie id(mid)
   //   $.ajax('/movies/' + mid, {
