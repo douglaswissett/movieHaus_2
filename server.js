@@ -3,6 +3,7 @@ require('dotenv').config();
 var express = require('express');
 var logger  = require('morgan');
 var path    = require('path');
+var db      = require('./db/pgp.js');
 var app = express();
 
 
@@ -16,14 +17,16 @@ app.get('/', (req, res) => {
 });
 
 // THREATRES
-app.get('/theatres', (req, res) => {
+app.get('/theatres', db.showTheatres, (req, res) => {
   // takes db.showThreatres
-  //res.send(res.rows);
+  var data = res.rows;
+  res.send(data);
 });
 
-app.get('/theatres/:id', (req, res) => {
+app.get('/theatres/:id', db.showTheatreMovie, (req, res) => {
   // takes db.showTheatreMovies
-  //res.send(res.rows);
+  var data = res.rows;
+  res.send(data);  
 });
 app.post('/theatres/:id', (req, res) => {
   // takes db.addMovie

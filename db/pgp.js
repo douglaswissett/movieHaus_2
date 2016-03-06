@@ -1,3 +1,4 @@
+'use strict'
 var pgp     = require('pg-promise')({});
 var cn = {
   host: 'localhost',
@@ -25,10 +26,10 @@ function showTheatres(req,res,next){
 // get all movie_id from theatres_movies_join table where theatre_id=($1)
 function showTheatreMovie(req,res,next){
   // var tID = req.params.id;
-  db.many("SELECT * FROM movies m " + 
-          "INNER JOIN theatre_movie_showtime tms " + 
-          "ON m.movie_id = tms.movie_id " + 
-          "WHERE tms.theatre_id = ($1);", [req.params.id])
+  db.many(`SELECT * FROM movies m
+          INNER JOIN theatre_movie_showtime tms
+          ON m.movie_id = tms.movie_id
+          WHERE tms.theatre_id = ($1);`, [req.params.id])
     .then(function(data){
       console.log(data);  // should get multiple movies in a theatre
       res.rows = data;
