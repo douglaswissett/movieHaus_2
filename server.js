@@ -34,7 +34,7 @@ app.get('/theatres/:id', db.showTheatreMovie, (req, res) => {
 app.post('/theatres/:id', db.addMovie, (req, res) => {
   // takes db.addMovie
   // redirect to some route
-  console.log(req.body);
+  res.send(req.body);
 });
 
 // MOVIES
