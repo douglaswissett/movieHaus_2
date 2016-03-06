@@ -37,6 +37,7 @@ function showTheatreMovie(req,res,next){
     })
     .catch(()=>{
       console.log('ERROR in showing ALL MOVIES IN A THEATRE!');
+      next();
     })
 }
 
@@ -63,10 +64,10 @@ function addShowtime(time, tID, mID){
     })
     .catch(()=>{
       console.log('ERROR in ADDING SHOWTIME!');
-    }) 
+    })
 }
 
-// 1- add movie to movies table 
+// 1- add movie to movies table
 // 2- get last movie_id
 // 3- (iterate) add each showTime to theatre_movie_showtime WHERE movie_id AND theatre_id
 function addMovie(req,res,next){
@@ -84,7 +85,7 @@ function addMovie(req,res,next){
     })
     .catch(()=>{
       console.log('ERROR in ADDING MOVIE!');
-    })    
+    })
 }
 
 // edit movie_id info in movies table + add showtimes
@@ -125,7 +126,3 @@ module.exports.getMovie = getMovie;
 module.exports.addMovie = addMovie;
 module.exports.editMovie = editMovie;
 module.exports.deleteMovie = deleteMovie;
-
-
-
-

@@ -39,13 +39,9 @@ $(document).ready(()=> {
     })
     $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
     $('#delete').click((event)=> {
-<<<<<<< HEAD
-      removeMovie();
-    })
-=======
+
       removeMovie(data, tid);
     })
->>>>>>> 679c7d0f2c7cce6df5a32d49d6571946ced2defb
   }
 
 
@@ -64,10 +60,16 @@ $(document).ready(()=> {
         var h2 = $('<h2>').text('Movie List');
         var ul = $('<ul>');
         $moviesContainer.append(h2);
-        data.forEach((el) => {
-          var li = $('<li>').text(el.title + ': ' + el.showtimes.split(',').join(' & ')).attr('id', 'm'+el.movie_id).addClass('movie');
+        console.log(data);
+        if (!data) {
+          var li = $('<li>').text('No Movies Bitch');
           ul.append(li);
-        });
+        } else {
+          data.forEach((el) => {
+            var li = $('<li>').text(el.title + ': ' + el.showtimes.split(',').join(' & ')).attr('id', 'm'+el.movie_id).addClass('movie');
+            ul.append(li);
+          });
+        }
         $moviesContainer.append(ul);
         movieEvent(tid);
       })
