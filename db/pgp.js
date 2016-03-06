@@ -55,12 +55,11 @@ function getMovie(req,res,next){
 }
 
 // gets most recent movie_id
-function addShowtime(mID, tID, time){
+function addShowtime(time, tID, mID){
   db.none(`INSERT INTO theatre_movie_showtime(showTime, theatre_id, movie_id) VALUES($1,$2,$3);`,
           [time, tID, mID])
     .then(()=>{
       console.log('ADDED SHOWTIME SUCCESSFUL');
-      // next();        // would this break the iteration ??
     })
     .catch(()=>{
       console.log('ERROR in ADDING SHOWTIME!');
@@ -76,11 +75,11 @@ function addMovie(req,res,next){
           [req.body.title, req.body.img_url, req.body.year, req.body.rating, req.body.director, req.body.plot, req.body.actors])
     .then((data)=>{
       console.log(data);      // need to get movie_id
-      var showTimes = req.body.showTimes;   // string or array?
+      var showTimes = req.body.showtimes.split(' ');   // string or array?
       // iterate & add each showTime to theatre_movie_showtime table
-      for(var i in showTimes){
-        addShowtime(data.movie_id_holder, req.params.id, showTimes[i]);
-      }
+      showTimes.forEach((time)=>{
+        addShowtime(time, req.params.id, req.body.mid);
+      });
       next();
     })
     .catch(()=>{
@@ -88,13 +87,17 @@ function addMovie(req,res,next){
     })    
 }
 
-// edit movie_id info in movies table
+// edit movie_id info in movies table + add showtimes
 function editMovie(req,res,next){
   // var mID = req.params.id;
   db.none(`UPDATE movies SET title=($1), year=($2), rating=($3), director=($4), plot=($5), actors=($6) WHERE movie_id=($7);`,
           [req.body.title, req.body.year, req.body.rating, req.body.director, req.body.plot, req.body.actors, req.params.id])
     .then(()=>{
-      console.log('UPDATE COMPLETED!');     // testing status for UPDATE
+      var showTimes = req.body.showtimes.split(' '); // string?? or array??
+      showTimes.forEach((time)=>{
+        addShowtime(time, req.body.tid, req.params.id);
+      });
+      console.log('UPDATED NEW MOVIE INFO & SHOWTIMES!');     // testing status for UPDATE
       next();
     })
     .catch(()=>{

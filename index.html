@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>MovieHaus 2.0</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
   <script src='javascript/app.js'></script>
 </head>
 <body>
-  <nav id="nav-bar">
-    <ul id="homeList">
-      <li><a href="/">Home</a></li>
-    </ul>
-    <div>
-      <form id="searchForm">
-        <input type="text" name="search" id="search" placeholder="Search Movies">
-        <input type="submit" value="Search">
-      </form>
-    </div>
-  </nav>
+  <div class="container">
+    <nav id="nav-bar">
+      <ul id="homeList">
+        <li id="home">Home</li>
+      </ul>
+      <div>
+        <form id="searchForm">
+          <input type="text" name="search" id="search" placeholder="Search Movies">
+          <input type="submit" value="Search">
+        </form>
+      </div>
+    </nav>
+  </div>
   <div id="container">
+    <!-- row container here -->
   </div>
 </body>
 </html>

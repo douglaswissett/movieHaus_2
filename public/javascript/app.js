@@ -1,16 +1,16 @@
 $(document).ready(()=> {
   var $container = $('#container');
-
-
-  // var $profileContainer = $('#profile-container');
-
+  // render homepage on load
   renderHome();
+
+  /* Render functions */
   function renderHome() {
     $.get('/theatres')
     .done((data)=> {
       $container.empty();
-      $container.append($('<div>').attr('id', 'theatre-container'));
-      $container.append($('<div>').attr('id', 'movie-container'));
+      $container.append($('<div>').addClass('row'));
+      $('.row').append($('<div>').attr('id', 'theatre-container').addClass('six columns'));
+      $('.row').append($('<div>').attr('id', 'movie-container').addClass('six columns'));
 
       var $theatresContainer = $('#theatre-container');
       for (var i = 0; i < data.length; i++) {
@@ -21,6 +21,31 @@ $(document).ready(()=> {
     })
   }
 
+  function renderProfile(data, tid) {
+    $container.empty();
+    $container.append($('<div>').addClass('row'));
+    $('.row').append($('<div>').attr('id', 'profile-container').addClass('six columns'));
+    $('.row').append($('<div>').attr('id', 'profile-img').addClass('six columns'));
+    $('#profile-container').append($('<h2>').text(data.title + ' (' + data.year + ')'));
+    $('#profile-container').append($('<p>').text('Rating: ' + data.rating));
+    $('#profile-container').append($('<p>').text('Directors: ' + data.director));
+    $('#profile-container').append($('<p>').text('Actors: ' + data.actors));
+    $('#profile-container').append($('<p>').text('Plot: ' + data.plot));
+    $('#profile-img').append(`<img src=${data.img_url}>`);
+
+    $('#profile-container').append($('<button>').text('Edit').attr('id', 'edit'));
+    $('#edit').click((event)=> {
+      editMovie(data, tid);
+    })
+    $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
+    $('#delete').click((event)=> {
+      removeMovie();
+    })
+  }
+
+
+
+  /* Event functions */
   function theatreEvent() {
     $('.theatre').click((event)=> {
       var tid = event.target.id;
@@ -39,45 +64,25 @@ $(document).ready(()=> {
           ul.append(li);
         });
         $moviesContainer.append(ul);
-        movieEvent();
+        movieEvent(tid);
       })
     })
   }
 
-
-  function movieEvent() {
+  function movieEvent(tid) {
     $('.movie').click((event)=> {
       var mid = event.target.id;
       mid = mid.slice(1);
 
-
       $.get('/movies/' + mid)
       .done((data)=> {
-        $container.empty();
-
-        $container.append($('<div>').attr('id', 'profile-container'));
-        $container.append($('<div>').attr('id', 'profile-img'));
-        $('#profile-container').append($('<h2>').text(data.title + ' (' + data.year + ')'));
-        $('#profile-container').append($('<p>').text('Rating: ' + data.rating));
-        $('#profile-container').append($('<p>').text('Directors: ' + data.director));
-        $('#profile-container').append($('<p>').text('Actors: ' + data.actors));
-        $('#profile-container').append($('<p>').text('Plot: ' + data.plot));
-        $('#profile-img').append(`<img src=${data.img_url}>`);
-
-        $('#profile-container').append($('<button>').text('Edit').attr('id', 'edit'));
-        $('#edit').click((event)=> {
-          editMovie(data);
-        })
-        $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
-        var $delete = $('#delete');
-        $delete.click((event)=> {
-          removeMovie();
-        })
+        // paint profile page
+        renderProfile(data, tid);
       })
     })
   }
 
-  function editMovie(data) {
+  function editMovie(data, tid) {
     $('#profile-container').empty()
     .append(
         `<div id="edit-container">`);
@@ -90,6 +95,9 @@ $(document).ready(()=> {
         `<input type="text" name="director" placeholder="${data.director}">`,
         `<input type="text" name="plot" placeholder="${data.plot}">`,
         `<input type="text" name="actors" placeholder="${data.actors}">`,
+        `<input type="hidden" name="img_url" value="${data.img_url}">`,
+        `<input type="hidden" name="tid" value="${tid}">`,
+        `<input type="hidden" name="mid" value="${data.movie_id}">`,
         '<input type="submit" value="Edit">'
       );
     submitEdit(data);
@@ -106,8 +114,10 @@ $(document).ready(()=> {
         type: 'PUT',
         data: $('#editForm').serialize()
       })
-      .done((data) => {
-        
+
+      .done( (data) => {
+        console.log(data);
+        renderProfile(data);
       })
     });
   }
@@ -124,6 +134,15 @@ $(document).ready(()=> {
 
 
 
+
+
+
+
+  /* Nav-bar */
+  $('#home').click((event) => {
+    renderHome();
+  });
+
   $('#searchForm').submit((event) => {
     event.preventDefault();
     $container.empty();
@@ -134,5 +153,4 @@ $(document).ready(()=> {
       console.log(data);
     });
   });
-
 })
