@@ -110,14 +110,12 @@ $(document).ready(()=> {
     $('#editForm').submit((event) => {
       event.preventDefault();
 
-      console.log();
       $.ajax({
         url: '/movies/'+ mid, 
         type: 'PUT',
         data: $('#editForm').serialize()
       })
       .done( (data) => {
-        console.log(data);
         renderProfile(data);
       })
     });
@@ -132,7 +130,6 @@ $(document).ready(()=> {
       data: {tid: tid}
     })
     .done((data)=> {
-      console.log(data);
       renderHome();
     });
   }
