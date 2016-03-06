@@ -82,7 +82,7 @@ $(document).ready(()=> {
   function editMovie(title, year, rating) {
     $('#profile-container').empty()
     .append(
-      `<div id="edit-container>`,
+      `<div id="edit-container">`,
       `<form id="editForm">`,
       `<input type="text" name="title" placeholder="${title}">`,
       `<input type="int" name="year" placeholder="${year}">`,
