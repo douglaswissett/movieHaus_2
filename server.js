@@ -3,12 +3,15 @@ require('dotenv').config();
 var express = require('express');
 var logger  = require('morgan');
 var path    = require('path');
+var bodyParser = require('body-parser');
 var db      = require('./db/pgp.js');
 var app = express();
 
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 // HOMEPAGE
@@ -41,6 +44,7 @@ app.get('/movies/:id', db.getMovie, (req, res) => {
 });
 app.put('/movies/:id', db.editMovie, (req, res) => {
   // takes db.editMovie
+  res.send(req.body);
   // redirect to some route
 });
 app.delete('/movies/:id', (req, res) => {
