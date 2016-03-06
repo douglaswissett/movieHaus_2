@@ -9,8 +9,8 @@ $(document).ready(()=> {
     .done((data)=> {
       $container.empty();
       $container.append($('<div>').addClass('row'));
-      $('.row').append($('<div>').attr('id', 'theatre-container').addClass('five columns'));
-      $('.row').append($('<div>').attr('id', 'movie-container').addClass('five columns'));
+      $('.row').append($('<div>').attr('id', 'theatre-container').addClass('six columns'));
+      $('.row').append($('<div>').attr('id', 'movie-container').addClass('six columns'));
 
       var $theatresContainer = $('#theatre-container');
       for (var i = 0; i < data.length; i++) {
@@ -23,9 +23,9 @@ $(document).ready(()=> {
 
   function renderProfile(data, tid) {
     $container.empty();
-
-    $container.append($('<div>').attr('id', 'profile-container'));
-    $container.append($('<div>').attr('id', 'profile-img'));
+    $container.append($('<div>').addClass('row'));
+    $('.row').append($('<div>').attr('id', 'profile-container').addClass('six columns'));
+    $('.row').append($('<div>').attr('id', 'profile-img').addClass('six columns'));
     $('#profile-container').append($('<h2>').text(data.title + ' (' + data.year + ')'));
     $('#profile-container').append($('<p>').text('Rating: ' + data.rating));
     $('#profile-container').append($('<p>').text('Directors: ' + data.director));

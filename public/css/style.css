@@ -12,6 +12,12 @@ html, body {
   /*margin: 0 auto;*/
 }
 
+#container {
+  border: 1px solid black;
+  width: 75%;
+  margin: 0 auto;
+}
+
 #nav-bar {
   /*width: 80%;*/
   height: 50px;
@@ -63,7 +69,7 @@ html, body {
 }
 
 img {
-  height: 100%;
+  width: 100%;
 }
 
 #edit-container {
