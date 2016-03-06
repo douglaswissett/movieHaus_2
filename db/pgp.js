@@ -26,7 +26,7 @@ function showTheatres(req,res,next){
 // get all movie_id from theatres_movies_join table where theatre_id=($1)
 function showTheatreMovie(req,res,next){
   // var tID = req.params.id;
-  db.many(`SELECT m.movie_id, m.title, array_to_string(array_agg(tms.showtime), ',')
+  db.many(`SELECT m.movie_id, m.title, array_to_string(array_agg(tms.showtime), ',') showtimes
           FROM movies m INNER JOIN theatre_movie_showtime tms
           ON m.movie_id = tms.movie_id WHERE tms.theatre_id = ($1)
           GROUP BY m.movie_id;`, [req.params.id])
