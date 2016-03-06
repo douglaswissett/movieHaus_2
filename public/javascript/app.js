@@ -68,7 +68,7 @@ $(document).ready(()=> {
 
         $('#profile-container').append($('<button>').text('Edit').attr('id', 'edit'));
         $('#edit').click((event)=> {
-          editMovie(data.title, data.year, data.rating);
+          editMovie(data);
         })
         $('#profile-container').append($('<button>').text('Delete').attr('id', 'delete'));
         var $delete = $('#delete');
@@ -79,17 +79,17 @@ $(document).ready(()=> {
     })
   }
 
-  function editMovie(title, year, rating) {
+  function editMovie(data) {
     $('#profile-container').empty()
     .append(
       `<div id="edit-container">`,
       `<form id="editForm">`,
-      `<input type="text" name="title" placeholder="${title}">`,
-      `<input type="int" name="year" placeholder="${year}">`,
-      `<input type="int" name="rating" placeholder="${rating}">`,
-      '<input type="text" name="director" placeholder="director">',
-      '<input type="text" name="plot" placeholder="plot">',
-      '<input type="text" name="actors" placeholder="actors">',
+      `<input type="text" name="title" placeholder="${data.title}">`,
+      `<input type="int" name="year" placeholder="${data.year}">`,
+      `<input type="int" name="rating" placeholder="${data.rating}">`,
+      `<input type="text" name="director" placeholder="${data.director}">`,
+      `<input type="text" name="plot" placeholder="${data.plot}">`,
+      `<input type="text" name="actors" placeholder="${data.actors}">`,
       '<input type="submit" value="Edit">',
       '</form>',
       '</div>'
