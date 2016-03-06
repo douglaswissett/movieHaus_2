@@ -94,9 +94,13 @@ $(document).ready(()=> {
       '</form>',
       '</div>'
     );
+    submitEdit(data);
+  }
+
+  function submitEdit (data) {
     $('#editForm').submit((event) => {
       //need to grab movie id(mid)
-    //   $.ajax('/movies/' + mid, {
+    //   $.ajax('/movies/' + data.movie_id, {
     //     type: PUT
     //   })
     //   .done(data)=> {
