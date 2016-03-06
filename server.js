@@ -42,14 +42,15 @@ app.get('/movies/:id', db.getMovie, (req, res) => {
   var data = res.rows;
   res.send(data);
 });
-app.put('/movies/:id', (req, res) => {
+app.put('/movies/:id', db.editMovie, (req, res) => {
   // takes db.editMovie
-  res.send(req.body);
   // redirect to some route
+  res.send(req.body);
 });
-app.delete('/movies/:id', (req, res) => {
+app.delete('/movies/:id', db.deleteMovie, (req, res) => {
   // takes db.deleteMovie
   // redirect to some route
+  res.send(req.body);
 });
 
 
