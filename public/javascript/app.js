@@ -156,11 +156,37 @@ $(document).ready(()=> {
   $('#searchForm').submit((event) => {
     event.preventDefault();
     $container.empty();
+    $container.append($('<div>').addClass('row'));
+    $('.row').append($('<div>').attr('id', 'results-container').addClass('six columns'));
+    $('.row').append($('<div>').attr('id', 'add-container').addClass('six columns'));
 
     var title = event.target[0].value;
     $.get('http://www.omdbapi.com/?s=' + title) // need to request again using id for more detail
     .done( (data) => {
-      console.log(data);
+      var $results = $('#results-container');
+      
+      data.Search.forEach((el) => {
+        var div = $('<div>').addClass('results');
+        var ul = $('<ul>');
+
+        ul.append(
+          `<li class="result-list">${el.Title}</li>`,
+          `<li class="result-list">${el.Year}</li>`,
+          `<li class="result-list">${el.imdbID}</li>`,
+          `<img src="${el.Poster}">`
+        );
+        div.append(ul);
+        div.append($('<button>').text('Add Movie').attr('id', 'add'));
+        $results.append(div);
+      });
+
+      $('#add').click((event) => {
+        console.log();
+      });
     });
   });
+
+
+
+
 })
