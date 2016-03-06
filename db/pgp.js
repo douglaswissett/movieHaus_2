@@ -6,7 +6,7 @@ var cn = {
   user: process.env.DB_USER,
   password: process.env.DB_PASS
 }
-var db      = pgp(cn);
+var db = pgp(cn);
 
 // show all theatres in theatres table
 function showTheatres(req,res,next){
@@ -49,14 +49,43 @@ function getMovie(req,res,next){
       next();
     })
     .catch(function(){
-      console.log('ERROR in getting MOVIE DETAILS!');
+      console.log('ERROR in GETTING MOVIE PROFILE!');
     })
+}
+
+// gets most recent movie_id
+function addShowtime(mID, tID, time){
+  db.none("INSERT INTO theatre_movie_showtime(showTime, theatre_id, movie_id) VALUES($1,$2,$3);",
+          [time, tID, mID])
+    .then(function(){
+      console.log('ADDED SHOWTIME SUCCESSFUL');
+      // next();        // would this break the iteration ??
+    })
+    .catch(function(){
+      console.log('ERROR in ADDING SHOWTIME!');
+    }) 
 }
 
 // 1- add movie to movies table 
 // 2- get last movie_id
 // 3- (iterate) add each showTime to theatre_movie_showtime WHERE movie_id AND theatre_id
-function addMovie(req,res,next){}
+function addMovie(req,res,next){
+  // var tID = req.params.id;
+  db.any("INSERT INTO movies(title, img_url, year, rating, director, plot, actors) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING movie_id;",
+          [req.body.title, req.body.img_url, req.body.year, req.body.rating, req.body.director, req.body.plot, req.body.actors])
+    .then(function(data){
+      console.log(data);      // need to get movie_id
+      var showTimes = req.body.showTimes;   // string or array?
+      // iterate & add each showTime to theatre_movie_showtime table
+      for(var i in showTimes){
+        addShowtime(data.movie_id_holder, req.params.id, showTimes[i]);
+      }
+      next();
+    })
+    .catch(function(){
+      console.log('ERROR in ADDING MOVIE!');
+    })    
+}
 
 // edit movie_id info in movies table
 function editMovie(req,res,next){
@@ -69,7 +98,7 @@ function editMovie(req,res,next){
       next();
     })
     .catch(function(){
-      console.log('ERROR in editing MOVIE DETAILS!');
+      console.log('ERROR in EDITING MOVIE DETAILS!');
     })
 }
 
@@ -83,7 +112,7 @@ function deleteMovie(req,res,next){
       next();
     })
     .catch(function(){
-      console.log('ERROR in getting MOVIE DETAILS!');
+      console.log('ERROR in DELETING MOVIE!');
     })
 }
 
