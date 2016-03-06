@@ -21,7 +21,7 @@ CREATE TABLE movies (
 -- showTime for each movie_theatre pair
 CREATE TABLE theatre_movie_showtime (
   showTime_id serial PRIMARY KEY UNIQUE,
-  showTime timestamp,
+  showTime VARCHAR(255),
   theatre_id integer REFERENCES theatres ON DELETE CASCADE,
   movie_id integer REFERENCES movies ON DELETE CASCADE
 );
