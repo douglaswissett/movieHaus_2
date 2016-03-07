@@ -37,6 +37,7 @@ function showTheatreMovie(req,res,next){
     })
     .catch(()=>{
       console.log('ERROR in showing ALL MOVIES IN A THEATRE!');
+      next();
     })
 }
 
@@ -55,50 +56,53 @@ function getMovie(req,res,next){
 }
 
 // gets most recent movie_id
-function addShowtime(mID, tID, time){
+function addShowtime(time, tID, mID){
   db.none(`INSERT INTO theatre_movie_showtime(showTime, theatre_id, movie_id) VALUES($1,$2,$3);`,
           [time, tID, mID])
     .then(()=>{
       console.log('ADDED SHOWTIME SUCCESSFUL');
-      // next();        // would this break the iteration ??
     })
     .catch(()=>{
       console.log('ERROR in ADDING SHOWTIME!');
-    }) 
+    })
 }
 
-// 1- add movie to movies table 
+// 1- add movie to movies table
 // 2- get last movie_id
 // 3- (iterate) add each showTime to theatre_movie_showtime WHERE movie_id AND theatre_id
 function addMovie(req,res,next){
   // var tID = req.params.id;
-  db.any(`INSERT INTO movies(title, img_url, year, rating, director, plot, actors) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING movie_id;`,
-          [req.body.title, req.body.img_url, req.body.year, req.body.rating, req.body.director, req.body.plot, req.body.actors])
+  db.one(`INSERT INTO movies(title, img_url, year, rating, director, plot, actors) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING movie_id;`,
+          [req.body.Title, req.body.Poster, req.body.Year, req.body.imdbRating, req.body.Director, req.body.Plot, req.body.Actors])
     .then((data)=>{
-      console.log(data);      // need to get movie_id
-      var showTimes = req.body.showTimes;   // string or array?
+      console.log(data.movie_id);      // need to get movie_id
+      //var showTimes = req.body.showtimes.split(' ');   // string or array?
       // iterate & add each showTime to theatre_movie_showtime table
-      for(var i in showTimes){
-        addShowtime(data.movie_id_holder, req.params.id, showTimes[i]);
-      }
+      // showTimes.forEach((time)=>{
+      //   addShowtime(time, req.params.id, req.body.mid);
+      // });
       next();
     })
     .catch(()=>{
       console.log('ERROR in ADDING MOVIE!');
-    })    
+    })
 }
 
-// edit movie_id info in movies table
+// edit movie_id info in movies table + add showtimes
 function editMovie(req,res,next){
   // var mID = req.params.id;
   db.none(`UPDATE movies SET title=($1), year=($2), rating=($3), director=($4), plot=($5), actors=($6) WHERE movie_id=($7);`,
           [req.body.title, req.body.year, req.body.rating, req.body.director, req.body.plot, req.body.actors, req.params.id])
     .then(()=>{
-      console.log('UPDATE COMPLETED!');     // testing status for UPDATE
+      var showTimes = req.body.showtimes.split(' '); // string?? or array??
+      showTimes.forEach((time)=>{
+        addShowtime(time, req.body.tid, req.params.id);
+      });
+      console.log('UPDATED NEW MOVIE INFO & SHOWTIMES!');     // testing status for UPDATE
       next();
     })
-    .catch(()=>{
-      console.log('ERROR in EDITING MOVIE DETAILS!');
+    .catch((error)=>{
+      console.log('ERROR in EDITING MOVIE DETAILS!', error);
     })
 }
 
@@ -106,7 +110,7 @@ function editMovie(req,res,next){
 function deleteMovie(req,res,next){
   // var mID = req.params.id;
   db.none(`DELETE FROM theatre_movie_showtime WHERE movie_id=($1) AND theatre_id=($2);`,
-          [req.params.mID, req.params.tID])   // how do we differentiate btw movie_id & theatre_id ??
+          [req.params.id, req.body.tid])   // how do we differentiate btw movie_id & theatre_id ??
     .then(()=>{
       console.log('DELETE COMPLETED!');     // testing status for DELETE
       next();
@@ -122,7 +126,3 @@ module.exports.getMovie = getMovie;
 module.exports.addMovie = addMovie;
 module.exports.editMovie = editMovie;
 module.exports.deleteMovie = deleteMovie;
-
-
-
-

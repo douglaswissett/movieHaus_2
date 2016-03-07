@@ -3,12 +3,15 @@ require('dotenv').config();
 var express = require('express');
 var logger  = require('morgan');
 var path    = require('path');
+var bodyParser = require('body-parser');
 var db      = require('./db/pgp.js');
 var app = express();
 
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 // HOMEPAGE
@@ -26,11 +29,12 @@ app.get('/theatres', db.showTheatres, (req, res) => {
 app.get('/theatres/:id', db.showTheatreMovie, (req, res) => {
   // takes db.showTheatreMovies
   var data = res.rows;
-  res.send(data);  
+  res.send(data);
 });
-app.post('/theatres/:id', (req, res) => {
+app.post('/theatres/:id', db.addMovie, (req, res) => {
   // takes db.addMovie
   // redirect to some route
+  res.send(req.body);
 });
 
 // MOVIES
@@ -39,13 +43,15 @@ app.get('/movies/:id', db.getMovie, (req, res) => {
   var data = res.rows;
   res.send(data);
 });
-app.put('/movies/:id', (req, res) => {
+app.put('/movies/:id', db.editMovie, (req, res) => {
   // takes db.editMovie
   // redirect to some route
+  res.send(req.body);
 });
-app.delete('/movies/:id', (req, res) => {
+app.delete('/movies/:id', db.deleteMovie, (req, res) => {
   // takes db.deleteMovie
   // redirect to some route
+  res.send(req.body);
 });
 
 

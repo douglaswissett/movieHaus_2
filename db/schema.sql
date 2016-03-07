@@ -25,9 +25,3 @@ CREATE TABLE theatre_movie_showtime (
   theatre_id integer REFERENCES theatres ON DELETE CASCADE,
   movie_id integer REFERENCES movies ON DELETE CASCADE
 );
-
--- CREATE TABLE theatres_movies_join (
---   theatre_id integer REFERENCES theatres ON DELETE CASCADE,
---   movie_id integer REFERENCES movies ON DELETE CASCADE,
---   PRIMARY KEY (theatre_id, movie_id)
--- );
